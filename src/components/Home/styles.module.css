@@ -1,0 +1,49 @@
+
+
+ .abc{
+    background-color:rgb(19, 40, 144);
+    flex-direction: row;
+ }
+
+ .text{
+    color: aliceblue;
+    
+ }
+
+
+    .contain {
+       margin-right: "30px";
+    }
+
+    
+    root {
+       background: "rgb(23; 38; 112)";
+
+       height: "300px";
+
+       padding: "5px";
+    }
+
+    
+    left {
+        width: "300px";
+         padding-bottom:"10px";
+        position:"relative";
+          left:"10px";
+        right: "-20px";
+        display: "block";
+    }
+
+    
+    btn {
+       position: "relative";
+       top: "100px";
+       left: "30px";
+
+       margin: "3px";
+    }
+
+
+   .formcontrol{
+      width: 100%;
+   }
