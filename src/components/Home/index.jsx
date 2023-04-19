@@ -27,42 +27,41 @@ import styles from "./styles.module.css";
 
 
 function Home() {
-  const [area, setArea] = useState("");
-  const [date, setDate] = useState("");
-  const [materialUnit, setMaterialUnit] = useState("");
-  const [numberOfCode, setNumberOfCode] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [name, setName] = useState("");
+  const [userType, setUserType] = useState("");
+ 
+
   const [items, setItems] = useState({});
   const [selectAll, setSelectAll] = useState(false);
   const [checkedItems, setCheckedItems] = useState([]);
 
-  const handleAreaChange = (event) => {
-    setArea(event.target.value);
+  const handlephoneNumberChange = (event) => {
+    setPhoneNumber(event.target.value);
   };
 
-  const handleDateChange = (event) => {
-    setDate(event.target.value);
+  const handlenameChange = (event) => {
+    setName(event.target.value);
   };
 
-  const handleMaterialUnitChange = (event) => {
-    setMaterialUnit(event.target.value);
+  const handleuserTypeChange = (event) => {
+    setUserType(event.target.value);
   };
 
-  const handleNumberOfCodeChange = (event) => {
-    setNumberOfCode(event.target.value);
-  };
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const formData = { area, date, materialUnit, numberOfCode };
+    const formData = { phoneNumber, name, userType};
     console.log(formData);
     axios
       .post("http://localhost:8080/api/usersdata", formData)
       .then((response) => console.log(response.data))
       .catch((error) => console.error(error));
-    setArea("");
-    setDate("");
-    setMaterialUnit("");
-    setNumberOfCode("");
+    setPhoneNumber("");
+    setName("");
+    setUserType("");
+    
     window.location = "/";
   };
 
@@ -135,7 +134,7 @@ function Home() {
 
   const handleEdit = (index) => {
     console.log(index._id);
-    const formData = { area, date, materialUnit, numberOfCode };
+    const formData = { phoneNumber, name, userType };
     const id = index._id;
 
     axios
@@ -149,10 +148,10 @@ function Home() {
         // Handle error response
       });
 
-    setArea("");
-    setDate("");
-    setMaterialUnit("");
-    setNumberOfCode("");
+    setPhoneNumber("");
+    setName("");
+    setUserType("");
+    
     window.location = "/";
   };
 
@@ -261,29 +260,29 @@ function Home() {
                 <FormControl sx={{ m: 1 }}>
                   <TextField
                     className={styles.text}
-                    value={area}
-                    onChange={handleAreaChange}
+                    value={phoneNumber}
+                    onChange={handlephoneNumberChange}
                     fullWidth
                     id="fullWidth"
                     margin="dense"
-                    name="area"
-                    label="Area"
+                    name="phoneNumber"
+                    label="phoneNumber"
                     style={{ backgroundColor: "white" }}
                   />
                   <TextField
-                    type="date"
-                    value={date}
-                    onChange={handleDateChange}
+                    type="name"
+                    value={name}
+                    onChange={handlenameChange}
                     style={{ backgroundColor: "white" }}
-                    name="date"
+                    name="name"
                     id="margin-dense"
                     margin="dense"
                     variant="outlined"
                   />
                   <TextField
                     type="text"
-                    value={materialUnit}
-                    onChange={handleMaterialUnitChange}
+                    value={userType}
+                    onChange={handleuserTypeChange}
                     style={{ backgroundColor: "white" }}
                     id="margin-dense"
                     margin="dense"
@@ -291,17 +290,7 @@ function Home() {
                     variant="outlined"
                     label="Material Code"
                   />
-                  <TextField
-                    type="number"
-                    id="margin-dense"
-                    margin="dense"
-                    value={numberOfCode}
-                    onChange={handleNumberOfCodeChange}
-                    style={{ backgroundColor: "white" }}
-                    name="numberofunits"
-                    variant="outlined"
-                    label="Number of Units"
-                  />
+                 
                 </FormControl>
               </Box>
             </Grid>
@@ -310,76 +299,98 @@ function Home() {
       </Dialog>
 
       {/*  */}
-      <Grid item xs={6}></Grid>
 
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <Checkbox checked={selectAll} onChange={handleSelectAllChange} />
-            </TableCell>
-            <TableCell>
-              <Typography>
-                <b> Area </b>
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>
-                <b> Date </b>
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>
-                <b> Number of Units</b>
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>
-                <b> Number Of Codes </b>
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>
-                <b> Actions </b>
-              </Typography>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {Array.isArray(items) &&
-            items.map((item) => (
-              <TableRow key={item._id}>
+      <Grid container>
+        {/* <Grid item xs={3}>
+          <div style={{backgroundColor:"darkblue"}}>
+            <Typography>
+              admin
+              </Typography> 
+          </div>
+
+        </Grid> */}
+
+        <Grid item xs={12}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <Typography>
+                    <b> Vendor / User </b>
+                  </Typography>
+                </TableCell>
                 <TableCell>
                   <Checkbox
-                    checked={checkedItems.some(
-                      (checkedItem) => checkedItem._id === item._id
-                    )}
-                    onChange={(event) => handleCheckboxChange(event, item)}
+                    checked={selectAll}
+                    onChange={handleSelectAllChange}
                   />
                 </TableCell>
-
-                <TableCell>{item.area}</TableCell>
-                <TableCell>{item.date}</TableCell>
-                <TableCell>{item.numberOfCode}</TableCell>
-                <TableCell>{item.numberOfUnits}</TableCell>
                 <TableCell>
-                  <IconButton
-                    onClick={() => openDialog(item)}
-                    aria-label="ControlPointOutlined"
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => handleDelete(item)}
-                    aria-label="ControlPointOutlined"
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                  <Typography>
+                    <b> Name </b>
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography>
+                    {" "}
+                    <b> Phone Number </b>
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography>
+                    <b> userType</b>
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography>
+                    <b> Number Of Codes </b>
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography>
+                    <b> Actions </b>
+                  </Typography>
                 </TableCell>
               </TableRow>
-            ))}
-        </TableBody>
-      </Table>
+            </TableHead>
+            <TableBody>
+              {Array.isArray(items) &&
+                items.map((item) => (
+                  <TableRow key={item._id}>
+                    <TableCell>abc</TableCell>
+                    <TableCell>
+                      <Checkbox
+                        checked={checkedItems.some(
+                          (checkedItem) => checkedItem._id === item._id
+                        )}
+                        onChange={(event) => handleCheckboxChange(event, item)}
+                      />
+                    </TableCell>
+
+                    <TableCell>{item.phoneNumber}</TableCell>
+                    <TableCell>{item.name}</TableCell>
+                    
+                    <TableCell>{item.numberOfUnits}</TableCell>
+                    <TableCell>
+                      <IconButton
+                        onClick={() => openDialog(item)}
+                        aria-label="ControlPointOutlined"
+                      >
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        onClick={() => handleDelete(item)}
+                        aria-label="ControlPointOutlined"
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </Grid>
+      </Grid>
 
       {/*  */}
 
@@ -402,7 +413,7 @@ function Home() {
                 color="white"
                 alignContent="center"
               >
-                Update Item
+                Upname Item
               </Typography>
 
               <span
@@ -427,7 +438,7 @@ function Home() {
                   variant="contained"
                   onClick={() => handleEdit(items)}
                 >
-                  Update
+                  Upname
                 </Button>
               </span>
             </Grid>
@@ -439,29 +450,29 @@ function Home() {
                 <FormControl sx={{ m: 1 }}>
                   <TextField
                     className={styles.text}
-                    value={area}
-                    onChange={handleAreaChange}
+                    value={phoneNumber}
+                    onChange={handlephoneNumberChange}
                     fullWidth
                     id="fullWidth"
                     margin="dense"
-                    name="area"
-                    label="Area"
+                    name="phoneNumber"
+                    label="phoneNumber"
                     style={{ backgroundColor: "white" }}
                   />
                   <TextField
-                    type="date"
-                    value={date}
-                    onChange={handleDateChange}
+                    type="name"
+                    value={name}
+                    onChange={handlenameChange}
                     style={{ backgroundColor: "white" }}
-                    name="date"
+                    name="name"
                     id="margin-dense"
                     margin="dense"
                     variant="outlined"
                   />
                   <TextField
                     type="text"
-                    value={materialUnit}
-                    onChange={handleMaterialUnitChange}
+                    value={userType}
+                    onChange={handleuserTypeChange}
                     style={{ backgroundColor: "white" }}
                     id="margin-dense"
                     margin="dense"
@@ -469,17 +480,7 @@ function Home() {
                     variant="outlined"
                     label="Material Code"
                   />
-                  <TextField
-                    type="number"
-                    id="margin-dense"
-                    margin="dense"
-                    value={numberOfCode}
-                    onChange={handleNumberOfCodeChange}
-                    style={{ backgroundColor: "white" }}
-                    name="numberofunits"
-                    variant="outlined"
-                    label="Number of Units"
-                  />
+                  
                 </FormControl>
               </Box>
             </Grid>
